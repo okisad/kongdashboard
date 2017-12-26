@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row apiCard" *ngFor="let upstream of upstreams">
+    <div class="col-12" style="border: solid 1px black; margin: 10px;">
+      <div class="row">
+        <h5 class="text-center col-10" style="margin-top:10px;margin-bottom: 10px">{{upstream.name}}</h5>
+        <button class="btn btn-outline-danger col-1" style="margin-top: 10px" (click)="deleteUpstream(upstream)">Sil</button>
+      </div>
+      <hr style="height: 0px; background-color:black"/>
+      <div class="row">
+        <div class="col-12">
+          <b>Name : </b>{{upstream.name}}
+          <b>Slots : </b>{{upstream.slots}}
+          <b>Created_At : </b>{{upstream.created_at|date:'medium'}}<br>
+          <div class="row">
+            <h5 class="col-12 text-center">Targets</h5>
+          </div>
+          <div class="row">
+            <div class="col-4" *ngFor="let u of upstream.apis" style="border: solid 1px black;margin: 10px;">
+              <p>{{u.target}}</p>
+              <p>{{u.weight||number}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+      <div class="row">
+        <!--<a routerLink="/users/{{kongApi.id}}" class="btn btn-sm btn-primary text-center" style="margin: 5px;">Go Users</a>-->
+      </div>
+    </div>
+  </div>
+  <div class="row apiCard">
+    <div class="col-12" style="border: solid 1px black; margin: 10px;">
+      <h5 class="text-center" style="margin:10px;">Yeni Upstream</h5>
+      <hr style="height: 0px; background-color:black"/>
+      <div class="container">
+        <div class="row justify-content-center" style="margin-top: 10px">
+          <input class="col-12" placeholder="Upstream Name" [(ngModel)] = "newUpstream.name"><br>
+        </div>
+        <div class="row" style="margin-top: 10px">
+          <input class="col-6" placeholder="target ex='192.168.34.15:80'" [(ngModel)]="newUpstream.target1">
+          <input class="col-6" placeholder="weight ex='50'" [(ngModel)]="newUpstream.weight1">
+        </div>
+        <div class="row" style="margin-top: 10px">
+          <input class="col-6" placeholder="target ex='192.168.34.16:80'" [(ngModel)]="newUpstream.target2">
+          <input class="col-6" placeholder="weight ex='50'" [(ngModel)]="newUpstream.weight2">
+        </div>
+        <div class="row">
+          <button [disabled]="!addNewUpstreamButtonEnabled" class="btn btn-block btn-outline-success" style="margin-top: 10px;margin-bottom: 10px" (click)="createUpstream()">Ekle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

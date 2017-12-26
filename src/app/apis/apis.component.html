@@ -1,0 +1,119 @@
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="col-5" style="border: solid 1px black; margin: 10px;"
+         *ngFor="let kongApi of kongApis">
+      <h5 class="text-center" style="padding-top:5px;">{{kongApi.name}}</h5>
+      <hr style="height: 0px; background-color:black"/>
+      <div class="container" *ngIf="!kongApi.rate_config_screen">
+        <div class="row">
+          <div class="col-6">
+            <b>Name : </b>{{kongApi.name}}<br>
+            <b>Upstream_Url : </b>{{kongApi.upstream_url}}<br>
+            <b>Uris : </b>{{kongApi.uris}}<br>
+            <b>Created_At : </b>{{kongApi.created_at|date:'medium'}}<br>
+          </div>
+          <div class="col-6">
+            <b>Key-Auth : </b>
+            <button class="btn btn-sm btn-outline-dark" style="cursor: pointer"
+                    (click)="toggleKeyAuth(kongApi,kongApi.hasKeyAuth)">{{kongApi.hasKeyAuth}}
+            </button>
+            <br>
+            <b>Rate-Limiting : </b>
+            <button class="btn btn-sm btn-outline-dark" style="cursor: pointer;margin-top: 5px"
+                    (click)="toggleRateLimiting(kongApi)">{{kongApi.hasRateLimiting}}
+            </button>
+            <br>
+            <b>Acl : </b>
+            <button class="btn btn-sm btn-outline-dark" style="cursor: pointer;margin-top: 5px"
+                    (click)="toggleAclApi(kongApi)">{{kongApi.hasAcl}}
+            </button>
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <a routerLink="/users/{{kongApi.id}}" class="btn btn-sm btn-outline-success text-center" style="margin: 5px;">Go
+            Users</a>
+          <button class="btn btn-sm btn-outline-danger" style="margin: 5px;cursor: pointer"
+                  (click)="deleteApi(kongApi.id)">Sil
+          </button>
+        </div>
+      </div>
+      <div class="container" *ngIf="kongApi.rate_config_screen">
+        <div class="row" *ngIf="kongApi.hasRateLimiting">
+          <div class="col-6">
+            <b>Second : </b>{{kongApi.rateLimitConfig.config["second"]}}<br>
+            <b>Minute : </b>{{kongApi.rateLimitConfig.config["minute"]}}<br>
+            <b>Hour : </b>{{kongApi.rateLimitConfig.config["hour"]}}<br>
+            <b>Day : </b>{{kongApi.rateLimitConfig.config["day"]}}<br>
+            <b>Month : </b>{{kongApi.rateLimitConfig.config["month"]}}<br>
+            <b>Year : </b>{{kongApi.rateLimitConfig.config["year"]}}<br>
+          </div>
+          <div class="row justify-content-end">
+            <a class="btn btn-sm btn-outline-success text-center" (click)="toggleRateLimiting(kongApi)"
+               style="margin: 5px;">Geri</a>
+            <button class="btn btn-sm btn-outline-danger" style="margin: 5px;cursor: pointer"
+                    (click)="deletePlugin(kongApi)">Sil
+            </button>
+          </div>
+        </div>
+        <div class="row" *ngIf="!kongApi.hasRateLimiting">
+          <div class="col-6">
+            <input placeholder="Second" type="number" [(ngModel)]="newRateLimit.second"><br>
+            <input placeholder="Minute" type="number" [(ngModel)]="newRateLimit.minute"><br>
+            <input placeholder="Hour" type="number" [(ngModel)]="newRateLimit.hour"><br>
+          </div>
+          <div class="col-6">
+            <input placeholder="Day" type="number" [(ngModel)]="newRateLimit.day"><br>
+            <input placeholder="Month" type="number" [(ngModel)]="newRateLimit.month"><br>
+            <input placeholder="Year" type="number" [(ngModel)]="newRateLimit.year"><br>
+          </div>
+          <div class="col-12 container">
+            <div class="row justify-content-end">
+              <a class="btn btn-sm btn-outline-success text-center" (click)="toggleRateLimiting(kongApi)"
+                 style="margin: 5px;">Geri</a>
+              <button class="btn btn-sm btn-outline-success" (click)="saveKongRateLimit(kongApi)" style="margin-right: 20px">
+                Ekle
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row apiCard justify-content-center col-8">
+      <div class="col-12" style="border: solid 1px black; margin: 10px;">
+        <h5 class="text-center">API EKLE</h5>
+        <hr style="height: 0px; background-color:black"/>
+        <div class="container">
+          <div class="form-row">
+            <div class="form-group col">
+              <input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="newKongApi.name">
+            </div>
+            <div class="form-group col">
+              <input type="text" class="form-control" placeholder="Hosts" name="hosts" [(ngModel)]="newKongApi.hosts">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <input type="text" class="form-control" placeholder="Uris" name="uris" [(ngModel)]="newKongApi.uris">
+            </div>
+            <div class="form-group col">
+              <input type="text" class="form-control" placeholder="Custom Upstream Url" name="custom upstream"
+                     [(ngModel)]="newKongApi.upstream_url">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <select id="inputState" class="form-control" [(ngModel)]="newKongApi.upstream_url">
+                <option *ngFor="let u of upstreams" [value]="u.name">{{u.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row justify-content-center" style="margin: 5px">
+            <button type="submit" class="btn btn-outline-success text-center" (click)="saveKongApi()">Kaydet</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

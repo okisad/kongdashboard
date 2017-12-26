@@ -1,0 +1,17 @@
+.config-button{
+  white-space: normal;
+  overflow: hidden;
+  font-size: small;
+}
+
+button{
+  cursor: pointer;
+}
+
+.no-consumer-id{
+  background-color: darksalmon;
+}
+
+.consumer-id{
+  background-color: lightgreen;
+}
